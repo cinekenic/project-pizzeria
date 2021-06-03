@@ -88,7 +88,7 @@
         select.menuProduct.form
       );
       thisProduct.formInputs = thisProduct.form.querySelectorAll(
-        select.all.input
+        select.all.formInputs
       );
       thisProduct.cartButton = thisProduct.element.querySelector(
         select.menuProduct.cartButton

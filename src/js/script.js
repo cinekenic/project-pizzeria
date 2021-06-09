@@ -194,6 +194,7 @@
       thisProduct.cartButton.addEventListener("click", function (event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
     processOrder() {
@@ -243,9 +244,62 @@
           }
         }
       }
+      thisProduct.priceSingle = price;
+      console.log(thisProduct.priceSingle);
       price *= thisProduct.amountWidget.value;
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
+      console.log(price);
+    }
+    addToCart() {
+      const thisProduct = this;
+      app.cart.add(thisProduct.prepareCartProduct());
+    }
+    prepareCartProduct() {
+      const thisProduct = this;
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.amountWidget.value * thisProduct.priceSingle,
+        params: thisProduct.prepareCartProductParams(),
+      };
+      console.log(thisProduct.params);
+
+      return productSummary;
+    }
+
+    prepareCartProductParams() {
+      const thisProduct = this;
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+
+      const objSummarySelected = {};
+
+      for (let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+
+        objSummarySelected[paramId] = {
+          label: param.label,
+          options: {},
+        };
+
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+
+          const optionSelected =
+            formData[paramId] && formData[paramId].includes(optionId);
+
+          if (optionSelected) {
+            console.log(param);
+            objSummarySelected[paramId].options[optionId] = option.label;
+          }
+        }
+      }
+      console.log(objSummarySelected);
+      console.log(thisProduct.ObjSummarySelected);
+      return objSummarySelected;
     }
   }
 
@@ -253,6 +307,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initAction(thisWidget.input.value);
       console.log("AmountWidget:", thisWidget);
@@ -319,11 +374,14 @@
       console.log("new card", thisCard);
     }
     getElements(element) {
-      const thisCard = this;
-      thisCard.dom = {};
-      thisCard.dom.wrapper = element;
-      thisCard.dom.toggleTrigger = thisCard.dom.wrapper.querySelector(
+      const thisCart = this;
+      thisCart.dom = {};
+      thisCart.dom.wrapper = element;
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(
         select.cart.toggleTrigger
+      );
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(
+        select.cart.productList
       );
     }
     initAction() {
@@ -331,6 +389,13 @@
       thisCart.dom.toggleTrigger.addEventListener("click", function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+    add(menuProduct) {
+      const thisCart = this;
+      console.log("adding product", menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
 

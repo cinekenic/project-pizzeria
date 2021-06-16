@@ -149,7 +149,7 @@
     initAmountWidget() {
       const thisProduct = this;
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener("update", function () {
+      thisProduct.amountWidgetElem.addEventListener("updated", function () {
         thisProduct.processOrder();
       });
     }
@@ -223,10 +223,6 @@
 
           // check if there is param with a name of paramId in formData and if it includes optionId
 
-          const optionImage = thisProduct.imageWrapper.querySelector(
-            `.${paramId}-${optionId}`
-          );
-
           const optionSelected =
             formData[paramId] && formData[paramId].includes(optionId);
 
@@ -239,12 +235,15 @@
             price -= option.price;
           }
 
+          const optionImage = thisProduct.imageWrapper.querySelector(
+            `.${paramId}-${optionId}`
+          );
+
           if (optionImage) {
             if (optionSelected) {
-              optionImage.classList.add("active");
-              // classNames.menuProduct.imageVisible;
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
             } else {
-              optionImage.classList.remove("active");
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
@@ -308,7 +307,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
-      thisWidget.setValue(settings.amountWidget.defaultValue);
+      // thisWidget.setValue(settings.amountWidget.defaultValue);
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initAction(thisWidget.input.value);
       console.log("AmountWidget:", thisWidget);
@@ -471,32 +470,25 @@
     update() {
       const thisCart = this;
       const deliveryFee = settings.cart.defaultDeliveryFee;
-      console.log(deliveryFee);
+
       thisCart.totalNumber = 0;
       thisCart.subTotalPrice = 0;
-      console.log(thisCart.subTotalPrice);
+
       for (let product of thisCart.products) {
         thisCart.totalNumber += product.amount;
-        console.log(thisCart.totalNumber);
-        console.log(product.amount);
+
         thisCart.subTotalPrice += product.price;
-        console.log(product.price);
       }
-      console.log(thisCart.totalNumber);
-      console.log(thisCart.subTotalPrice);
+
       if (thisCart.totalNumber == 0) {
         thisCart.totalPrice = 0;
       } else {
         thisCart.totalPrice = thisCart.subTotalPrice + deliveryFee;
-        console.log(deliveryFee);
       }
-      console.log(thisCart.totalPrice);
-      console.log(thisCart.totalNumber);
 
       for (let price of thisCart.dom.totalPrice) {
         price.innerHTML = thisCart.totalPrice;
       }
-      console.log(thisCart.subTotalPrice);
 
       thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
       thisCart.dom.deliveryFee.innerHTML = deliveryFee;

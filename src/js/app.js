@@ -28,7 +28,7 @@ const app = {
 
         /*get page id from href attribute */
         const id = clickedElement.getAttribute("href").replace("#", "");
-        console.log(id);
+
         /*run actvatePage with that id */
         thisApp.actvatePage(id);
         /*change URL hash */
@@ -85,8 +85,6 @@ const app = {
         return rawResponse.json();
       })
       .then(function (parsedResponse) {
-        console.log("parseResponse", parsedResponse);
-
         thisApp.data.products = parsedResponse;
 
         thisApp.initMenu();
@@ -95,11 +93,6 @@ const app = {
 
   init: function () {
     const thisApp = this;
-    console.log("*** App starting ***");
-    console.log("thisApp:", thisApp);
-    console.log("classNames:", classNames);
-    console.log("settings:", settings);
-    console.log("templates:", templates);
 
     thisApp.initPages();
     thisApp.initData();

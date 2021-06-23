@@ -13,7 +13,6 @@ class CartProduct {
     thisCartProduct.amountWidget = menuProduct.amountWidget;
 
     thisCartProduct.getElements(element);
-    console.log("thisCartProduct", thisCartProduct);
     thisCartProduct.initCartWidget();
     thisCartProduct.initActions();
   }

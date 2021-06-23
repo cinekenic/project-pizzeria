@@ -8,8 +8,6 @@ class Cart {
     thisCart.products = [];
     thisCart.getElements(element);
     thisCart.initAction();
-
-    console.log("new cart", thisCart);
   }
   getElements(element) {
     const thisCart = this;
@@ -84,20 +82,18 @@ class Cart {
       .then(function (res) {
         return res.json();
       })
-      .then(function (parsedRes) {
-        console.log("parsedRes", parsedRes);
-      });
+      .then(function (parsedRes) {});
   }
 
   add(menuProduct) {
     const thisCart = this;
-    console.log("adding product", menuProduct);
+
     const generatedHTML = templates.cartProduct(menuProduct);
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisCart.dom.productList.appendChild(generatedDOM);
 
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-    console.log(" thisCart.products", thisCart.products);
+
     thisCart.update();
   }
   update() {

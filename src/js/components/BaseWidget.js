@@ -18,16 +18,15 @@ class BaseWidget {
 
     if (thisWidget.correctValue !== newValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
+      thisWidget.announce();
     }
 
     thisWidget.renderValue();
-
-    thisWidget.announce();
   }
 
-  setValue() {
+  setValue(value) {
     const thisWidget = this;
-    thisWidget.value = this.value;
+    thisWidget.value = value;
   }
 
   parseValue(value) {

@@ -82,18 +82,20 @@ class Cart {
       .then(function (res) {
         return res.json();
       })
-      .then(function (parsedRes) {});
+      .then(function (parsedRes) {
+        console.log("parsedRes", parsedRes);
+      });
   }
 
   add(menuProduct) {
     const thisCart = this;
-
+    console.log("adding product", menuProduct);
     const generatedHTML = templates.cartProduct(menuProduct);
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisCart.dom.productList.appendChild(generatedDOM);
 
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-
+    console.log(" thisCart.products", thisCart.products);
     thisCart.update();
   }
   update() {

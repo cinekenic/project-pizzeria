@@ -1,4 +1,4 @@
-import { settings, select, classNames, templates } from "./settings.js";
+import { settings, select, classNames } from "./settings.js";
 import Product from "./components/Product.js";
 import Cart from "./components/Cart.js";
 import Booking from "./components/Booking.js";
@@ -12,6 +12,7 @@ const app = {
     const idFromHash = window.location.hash.replace("#/", "");
 
     let pageMatchingHash = thisApp.pages[0].id;
+    console.log(pageMatchingHash);
 
     for (let page of thisApp.pages) {
       if (page.id == idFromHash) {
@@ -19,7 +20,7 @@ const app = {
       }
     }
 
-    thisApp.actvatePage(idFromHash);
+    thisApp.actvatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
       link.addEventListener("click", function (e) {
@@ -39,7 +40,7 @@ const app = {
 
   actvatePage(pageId) {
     const thisApp = this;
-
+    console.log(pageId);
     /*add class 'active' to matching pages, remove from non-matching */
     for (let page of thisApp.pages) {
       // if (page.id == pageId) {

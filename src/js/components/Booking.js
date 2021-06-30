@@ -172,6 +172,7 @@ class Booking {
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
+        table.classList.remove(classNames.booking.tableSelected);
       }
     }
   }
@@ -233,7 +234,7 @@ class Booking {
     thisBooking.dom.checkboxes.addEventListener("click", function (e) {
       thisBooking.choseStarters(e);
     });
-    thisBooking.dom.bookingSubmit.addEventListener("submit", function (e) {
+    thisBooking.dom.bookingSubmit.addEventListener("click", function (e) {
       e.preventDefault();
       thisBooking.sendBooking();
       alert("Rezerwacja została złożona.");
@@ -291,7 +292,7 @@ class Booking {
     const thisBooking = this;
 
     const url = settings.db.url + "/" + settings.db.bookings;
-    console.log(url);
+    // console.log(url);
 
     const bookingLoad = {
       date: thisBooking.dom.datePicker.value,
@@ -303,6 +304,11 @@ class Booking {
       phone: thisBooking.dom.phone.value,
       address: thisBooking.dom.address.value,
     };
+    console.log(thisBooking);
+
+    bookingLoad.starters.push(thisBooking.starters);
+    // console.log(thisBooking.starters);
+    // console.log("bookingLoad", bookingLoad);
 
     const options = {
       method: "POST",

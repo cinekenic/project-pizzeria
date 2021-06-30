@@ -178,6 +178,7 @@ class Booking {
   }
 
   render(element) {
+    console.log(element);
     const thisBooking = this;
     const generatedHTML = templates.bookingWidget();
     thisBooking.dom = {};
@@ -295,8 +296,8 @@ class Booking {
     // console.log(url);
 
     const bookingLoad = {
-      date: thisBooking.dom.datePicker.value,
-      hour: thisBooking.dom.hourPicker.value,
+      date: thisBooking.date,
+      hour: thisBooking.hour,
       table: parseInt(thisBooking.tableSelectedData),
       duration: thisBooking.hoursAmountWidget.value,
       ppl: thisBooking.peopleAmountWidget.value,
@@ -306,7 +307,7 @@ class Booking {
     };
     console.log(thisBooking);
 
-    bookingLoad.starters.push(thisBooking.starters);
+    bookingLoad.starters = thisBooking.dom.starters;
     // console.log(thisBooking.starters);
     // console.log("bookingLoad", bookingLoad);
 

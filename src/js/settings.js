@@ -52,7 +52,7 @@ export const select = {
     startersCheckbox: ".checkbox",
   },
   nav: {
-    links: ".main-nav a",
+    links: ".main-nav a, .choice a",
   },
   // CODE ADDED START
   cart: {

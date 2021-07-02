@@ -178,7 +178,6 @@ class Booking {
   }
 
   render(element) {
-    console.log(element);
     const thisBooking = this;
     const generatedHTML = templates.bookingWidget();
     thisBooking.dom = {};
@@ -235,10 +234,9 @@ class Booking {
     thisBooking.dom.checkboxes.addEventListener("click", function (e) {
       thisBooking.choseStarters(e);
     });
-    thisBooking.dom.bookingSubmit.addEventListener("click", function (e) {
-      e.preventDefault();
+    thisBooking.dom.bookingSubmit.addEventListener("click", function () {
       thisBooking.sendBooking();
-      alert("Rezerwacja została złożona.");
+      window.location.reload();
     });
   }
 
@@ -296,8 +294,8 @@ class Booking {
     // console.log(url);
 
     const bookingLoad = {
-      date: thisBooking.date,
-      hour: thisBooking.hour,
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPickerWidget.value,
       table: parseInt(thisBooking.tableSelectedData),
       duration: thisBooking.hoursAmountWidget.value,
       ppl: thisBooking.peopleAmountWidget.value,

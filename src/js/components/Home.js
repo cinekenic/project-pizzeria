@@ -1,44 +1,47 @@
-import { templates } from "../settings.js";
+import { templates, select } from "../settings.js";
+import { app } from "../app.js";
 
 class Home {
   constructor(element) {
     const thisHome = this;
     thisHome.render(element);
-    thisHome.init();
-  }
-
-  init() {
-    const thisHome = this;
-    const links = document.querySelectorAll(".choice");
-    console.log(links);
-    for (let link of links) {
-      link.addEventListener("click", function (e) {
-        console.log("hello");
-        console.log(thisHome);
-        console.log(this);
-        console.log(e.target);
-        console.log(e.currentTarget);
-        let clickedElement = this;
-        e.preventDefault();
-
-        /*get page id from href attribute */
-        const id = clickedElement.getAttribute("href").replace("#", "");
-        console.log(id);
-        /*run actvatePage with that id */
-
-        /*change URL hash */
-        window.location.hash = "#/" + id;
-      });
-    }
+    thisHome.navigate();
+    thisHome.initWidgets();
   }
 
   render(element) {
     console.log(element);
     const thisHome = this;
+
     const generatedHTML = templates.homeWidget();
     thisHome.dom = {};
     thisHome.dom.wrapper = element;
     thisHome.dom.wrapper.innerHTML = generatedHTML;
+    thisHome.dom.navLinks = thisHome.dom.wrapper.querySelectorAll(
+      select.home.mainOptions
+    );
+  }
+
+  initWidgets() {
+    const thisHome = this;
+    thisHome.element = document.querySelector(select.widgets.carousel);
+    // eslint-disable-next-line no-undef
+    thisHome.flkty = new Flickity(thisHome.element, {
+      cellAlign: "left",
+      contain: true,
+      autoPlay: true,
+      prevNextButtons: false,
+      wrapAround: true,
+    });
+    window.onload = function () {
+      thisHome.flkty.resize();
+    };
+  }
+
+  navigate() {
+    const thisHome = this;
+    console.log(thisHome.dom.navLinks);
+    app.initNavLinks(thisHome.dom.navLinks);
   }
 }
 

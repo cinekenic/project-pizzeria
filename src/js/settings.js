@@ -26,6 +26,7 @@ export const select = {
     cartButton: '[href="#add-to-cart"]',
   },
   widgets: {
+    carousel: ".main-carousel",
     amount: {
       input: "input.amount", // CODE CHANGED
       linkDecrease: 'a[href="#less"]',
@@ -52,7 +53,10 @@ export const select = {
     startersCheckbox: ".checkbox",
   },
   nav: {
-    links: ".main-nav a, .choice a",
+    links: ".main-nav a",
+  },
+  home: {
+    mainOptions: ".image-wrapper a",
   },
   // CODE ADDED START
   cart: {

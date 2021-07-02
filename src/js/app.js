@@ -4,23 +4,24 @@ import Cart from "./components/Cart.js";
 import Booking from "./components/Booking.js";
 import Home from "./components/Home.js";
 
-const app = {
+export const app = {
+  initHomeLinks() {
+    const thisApp = this;
+    thisApp.navLinks = document.querySelectorAll(select.nav.links);
+
+    thisApp.homeLinks = document.querySelectorAll(select.nav.homeLinks);
+  },
+
   initPages() {
     const thisApp = this;
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
-    console.log(thisApp.navLinks);
-    console.log(thisApp.pages);
-    const links = document.querySelectorAll(".choice a");
-    console.log(links);
+    thisApp.linkss = document.querySelector(".opening-hours");
 
     const idFromHash = window.location.hash.replace("#/", "");
-    console.log(idFromHash);
-    console.log(window.location.hash);
 
     let pageMatchingHash = thisApp.pages[0].id;
-    console.log(pageMatchingHash);
 
     for (let page of thisApp.pages) {
       if (page.id == idFromHash) {
@@ -46,9 +47,23 @@ const app = {
     }
   },
 
+  initNavLinks(links) {
+    const thisApp = this;
+    console.log(links);
+    for (let link of links) {
+      link.addEventListener("click", function (e) {
+        const clickedElement = this;
+        e.preventDefault();
+        const id = clickedElement.getAttribute("href").replace("#", "");
+        thisApp.actvatePage(id);
+        // window.location.hash = "#/" + id;
+      });
+    }
+  },
+
   actvatePage(pageId) {
     const thisApp = this;
-    console.log(pageId);
+
     /*add class 'active' to matching pages, remove from non-matching */
     for (let page of thisApp.pages) {
       // if (page.id == pageId) {
@@ -102,8 +117,8 @@ const app = {
 
   initHome() {
     const thisApp = this;
-    const bookingWidget = document.querySelector(select.containerOf.home);
-    thisApp.booking = new Home(bookingWidget);
+    const homeWidget = document.querySelector(select.containerOf.home);
+    thisApp.booking = new Home(homeWidget);
   },
 
   init: function () {
